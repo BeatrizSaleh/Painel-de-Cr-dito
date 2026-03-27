@@ -126,7 +126,7 @@ modalidades <- list(
 # ==============================================================================
 gerar_dados_simulados <- function() {
   set.seed(42)
-  datas <- seq(as.Date("2015-01-01"), as.Date("2024-12-01"), by = "month")
+  datas <- seq(as.Date("2015-01-01"), floor_date(Sys.Date(), "month"), by = "month")
   n <- length(datas)
   t <- seq_len(n)
   
@@ -433,11 +433,13 @@ css_dashboard <- tags$head(tags$style(HTML("
 barra_periodo <- div(
   class = "barra-periodo",
   div(style = "font-size:12px; color:#555; font-weight:600;", "PERÍODO:"),
-  dateRangeInput("periodo", NULL,
-                 start = "2019-01-01", end   = "2024-12-01",
-                 min   = "2015-01-01", max   = "2024-12-01",
-                 format = "mm/yyyy",   language = "pt-BR",
-                 width = "260px"),
+ dateRangeInput("periodo", NULL,
+               start = "2019-01-01",
+               end   = floor_date(Sys.Date(), "month"),
+               min   = "2015-01-01",
+               max   = floor_date(Sys.Date(), "month"),
+               format = "mm/yyyy", language = "pt-BR",
+               width = "260px"),
   div(
     style = "font-size:11px; color:#888; margin-left:auto;",
     paste0("Dados simulados para demonstração | Atualizado: ",
